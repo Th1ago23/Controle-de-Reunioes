@@ -4,25 +4,19 @@ namespace Controle_de_Reuniões.Model
 {
     public class Sala
     {
+        [Key]
+        public string Id { get; set; }
 
-        private string _id { get; set; }
-        private string _nome { get; set; }
-        private int  _numeroDeLugares { get; set; }
-        private string _setor { get; set; }
+        [Required]
+        public string Nome { get; set; }
 
-        [DataType(DataType.Date)]
-        private DateTime _horariosDisponiveis;
+        [Required]
+        public int NumeroDeLugares { get; set; }
 
-        public Sala(string id, string nome, int numeroDeLugares, string setor, DateTime horariosDisponiveis)
-        {
+        [Required]
+        public Setores Setor { get; set; }
 
-            _id = id;
-            _nome = nome;
-            _numeroDeLugares = numeroDeLugares;
-            _setor = setor;
-
-            _horariosDisponiveis = horariosDisponiveis;
-        }
-
+        [Required]
+        public DateTime HorarioDisponivel { get; set; }
     }
 }

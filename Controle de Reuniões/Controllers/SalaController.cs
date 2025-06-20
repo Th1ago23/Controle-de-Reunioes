@@ -1,83 +1,88 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Controle_de_Reuniões.Data;
+using Controle_de_Reuniões.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Controle_de_Reuniões.Controllers
 {
-    public class SalaController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SalaController : ControllerBase
     {
-        // GET: SalaController
-        public ActionResult Index()
+        private readonly AppDbContext _context;
+
+        public SalaController(AppDbContext context)
         {
-            return View();
+            _context = context;
         }
 
-        // GET: SalaController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Sala>>> GetSalas()
         {
-            return View();
+            return await _context.Salas.ToListAsync();
         }
 
-        // GET: SalaController/Create
-        public ActionResult Create()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Sala>> GetSala(string id)
         {
-            return View();
+            var sala = await _context.Salas.FindAsync(id);
+
+            if (sala == null)
+            {
+                return NotFound();
+            }
+
+            return sala;
         }
 
-        // POST: SalaController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult<Sala>> CreateSala(Sala sala)
         {
+            _context.Salas.Add(sala);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetSala), new { id = sala.Id }, sala);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateSala(string id, Sala sala)
+        {
+            if (id != sala.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(sala).State = EntityState.Modified;
+
             try
             {
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
             }
-            catch
+            catch (DbUpdateConcurrencyException)
             {
-                return View();
+                if (!_context.Salas.Any(e => e.Id == id))
+                    return NotFound();
+                else
+                    throw;
             }
+
+            return NoContent();
         }
 
-        // GET: SalaController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSala(string id)
         {
-            return View();
-        }
+            var sala = await _context.Salas.FindAsync(id);
+            if (sala == null)
+            {
+                return NotFound();
+            }
 
-        // POST: SalaController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            _context.Salas.Remove(sala);
+            await _context.SaveChangesAsync();
 
-        // GET: SalaController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: SalaController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return NoContent();
         }
     }
 }
