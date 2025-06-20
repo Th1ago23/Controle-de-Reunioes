@@ -1,0 +1,59 @@
+## Build results
+bin/
+obj/
+
+## User-specific files
+.vs/
+*.user
+*.suo
+
+## Rider
+.idea/
+*.sln.iml
+
+## ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+## Azure Pipelines
+.azure-pipelines/
+
+## DotCover
+*.dotCover
+
+## Logs
+*.log
+
+## Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+## NCrunch
+_NCrunch_*
+
+## Coverlet
+coverage*.json
+coverage*.xml
+coverage*.info
+
+## dotenv environment files
+.env
+
+## Visual Studio Code
+.vscode/
+
+## SonarQube
+.sonar/
+
+## Mac OS
+.DS_Store
+
+## Windows
+Thumbs.db
+ehthumbs.db
+
+## Templating
+TemplatePackages/
+
+## Others
+TestResults/

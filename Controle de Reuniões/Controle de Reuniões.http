@@ -1,0 +1,6 @@
+@Controle_de_Reuniões_HostAddress = http://localhost:5162
+
+GET {{Controle_de_Reuniões_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
