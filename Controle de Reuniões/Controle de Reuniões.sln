@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controle de Reuniões", "Controle de Reuniões.csproj", "{8BC49F5D-9F55-6174-49C7-61A5B37F3A4B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BC49F5D-9F55-6174-49C7-61A5B37F3A4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BC49F5D-9F55-6174-49C7-61A5B37F3A4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BC49F5D-9F55-6174-49C7-61A5B37F3A4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BC49F5D-9F55-6174-49C7-61A5B37F3A4B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9619BF98-71B2-4E94-9B8E-AFE7B6EAAFEA}
+	EndGlobalSection
+EndGlobal
