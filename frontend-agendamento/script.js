@@ -1,5 +1,5 @@
 // Configuração da API
-const API_BASE_URL = 'https://localhost:7075/api';
+const API_BASE_URL = 'http://localhost:5162/api';
 const SALAS_API = `${API_BASE_URL}/sala`;
 const RESERVAS_API = `${API_BASE_URL}/reserva`;
 
@@ -131,7 +131,7 @@ function renderAvailability(disponibilidade) {
     disponibilidade.horariosDisponiveis.forEach(horario => {
         const slot = document.createElement('div');
         slot.className = `time-slot ${horario.disponivel ? 'available' : 'unavailable'}`;
-        
+
         slot.innerHTML = `
             <div>${horario.inicio} - ${horario.fim}</div>
             ${horario.disponivel ? 
@@ -139,11 +139,11 @@ function renderAvailability(disponibilidade) {
                 `<div class="time-slot-info">Reservado por: ${horario.reservadoPor}</div>`
             }
         `;
-        
+
         if (horario.disponivel) {
-            slot.addEventListener('click', () => selectTimeSlot(horario));
+            slot.addEventListener('click', (event) => selectTimeSlot(horario, event));
         }
-        
+
         grid.appendChild(slot);
     });
     
@@ -152,22 +152,24 @@ function renderAvailability(disponibilidade) {
 }
 
 // Selecionar horário
-function selectTimeSlot(horario) {
-    // Limpar seleções anteriores
+function selectTimeSlot(horario, event) {
     document.querySelectorAll('.time-slot.selected').forEach(slot => {
         slot.classList.remove('selected');
     });
-    
-    // Adicionar seleção
+
     event.target.closest('.time-slot').classList.add('selected');
-    
+
     showReservationForm(horario);
 }
 
-// Mostrar formulário de reserva
+function formatDateBR(dateString) {
+  const [year, month, day] = dateString.split('-');
+  return `${day}/${month}/${year}`;
+}
+
 function showReservationForm(selectedSlot) {
     const sala = salaSelect.options[salaSelect.selectedIndex].text;
-    const data = new Date(selectedDate).toLocaleDateString('pt-BR');
+    const data = formatDateBR(selectedDate);
     
     document.getElementById('sala-info').value = sala;
     document.getElementById('data-info').value = data;
@@ -274,14 +276,21 @@ function handleReservationSubmit(event) {
         return;
     }
     
-    // Criar objeto de reserva
-    const dataInicio = new Date(selectedDate + 'T' + horaInicio);
-    const dataFim = new Date(selectedDate + 'T' + horaFim);
-    
+    // Quebra o selectedDate em partes
+    const [year, month, day] = selectedDate.split('-').map(Number);
+    // Quebra as horas e minutos do horário de início
+    const [startHour, startMinute] = horaInicio.split(':').map(Number);
+    // Quebra as horas e minutos do horário de fim
+    const [endHour, endMinute] = horaFim.split(':').map(Number);
+
+    // Cria as datas no horário local, evitando bug de fuso horário
+    const dataInicio = new Date(year, month - 1, day, startHour, startMinute);
+    const dataFim = new Date(year, month - 1, day, endHour, endMinute);
+
     currentReservation = {
         salaId: selectedSala,
-        responsavel: responsavel,
-        gerencia: gerencia,
+        responsavel,
+        gerencia,
         dataInicio: dataInicio.toISOString(),
         dataFim: dataFim.toISOString(),
         assunto: assunto || '',

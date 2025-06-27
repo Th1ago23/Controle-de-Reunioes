@@ -113,6 +113,20 @@ main {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+/* Botões */
+.btn-primaryVerify {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 25px;
+    margin-top: -25px;
+}
 
 .btn-primary:hover {
     transform: translateY(-2px);
@@ -169,6 +183,7 @@ main {
     transform: translateY(-1px);
 }
 
+
 /* Headers dos Cards */
 .selection-card h2,
 .availability-card h2,
@@ -188,7 +203,6 @@ main {
     margin-bottom: 25px;
 }
 
-/* Disponibilidade */
 .availability-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
